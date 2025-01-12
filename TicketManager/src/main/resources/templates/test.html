@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Test API Data</title>
+</head>
+<body>
+<h2>Fetched Performances</h2>
+<div th:each="performance : ${performances}">
+  <p th:text="'Title: ' + ${performance.name}"></p>
+  <p th:text="'Location: ' + ${performance.location}"></p>
+  <p th:text="'Date: ' + ${performance.startDate}"></p>
+  <hr/>
+</div>
+</body>
+</html>
