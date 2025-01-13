@@ -2,11 +2,11 @@ package com.example.TicketManager.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 
-@Data
+@Getter
 public class PerformanceList {
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "db")

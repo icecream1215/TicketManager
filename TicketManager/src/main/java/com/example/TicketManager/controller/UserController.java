@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping
 public class UserController {
     @Autowired
-
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserService userService;

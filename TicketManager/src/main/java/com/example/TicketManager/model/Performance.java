@@ -3,11 +3,11 @@ package com.example.TicketManager.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="performances")
@@ -36,4 +36,8 @@ public class Performance {
     @JacksonXmlProperty(localName = "poster")
     @Column(name = "poster")
     private String poster;      // 포스터 이미지 URL
+
+    @ManyToMany(mappedBy = "performances")
+    private List<User> users = new ArrayList<>();
+
 }

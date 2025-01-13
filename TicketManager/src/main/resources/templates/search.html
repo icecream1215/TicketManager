@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>공연 검색</title>
+</head>
+<body>
+<h1>공연 검색</h1>
+
+<!-- 검색 폼 -->
+<form action="/search" method="post">
+    <label for="showName">공연 이름:</label>
+    <input type="text" id="showName" name="showName">
+
+    <label for="startDate">시작 날짜:</label>
+    <input type="date" id="startDate" name="startDate">
+
+    <label for="endDate">종료 날짜:</label>
+    <input type="date" id="endDate" name="endDate">
+
+    <button type="submit">검색</button>
+</form>
+
+<!-- 검색 결과 -->
+<h2>검색 결과</h2>
+<table>
+    <thead>
+    <tr>
+        <th>공연 이름</th>
+        <th>장소</th>
+        <th>공연 날짜</th>
+        <th>추가</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="performance : ${performances}">
+        <td th:text="${performance.name}"></td>
+        <td th:text="${performance.location}"></td>
+        <td th:text="|${performance.startDate}~${performance.endDate}|"></td>
+        <td>
+            <button class="add-btn"
+                    th:data-id="${performance.id}"
+                    th:data-name="${performance.name}"
+                    th:data-location="${performance.location}"
+                    th:data-startDate="${performance.startDate}"
+                    th:data-endDate="${performance.endDate}">추가</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script src="/js/search.js"></script>
+
+</body>
+</html>
