@@ -1,9 +1,11 @@
 package com.example.TicketManager.controller;
 
-import com.example.TicketManager.model.Performance;
+import com.example.TicketManager.dto.PerformanceDTO;
+import com.example.TicketManager.service.CustomUserDetails;
 import com.example.TicketManager.service.KopisService;
 import com.example.TicketManager.service.PerformanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +22,10 @@ public class CalendarController {
     private KopisService kopisService;
 
     @GetMapping
-    public String showCalendar(Model model) {
-        //사용자가 저장한 공연 정보 출력
-
-        //List<Performance> performances = performanceService.getAllPerformances();
-        //model.addAttribute("performances", performances);
-        return "calendar";  // calendar.html 뷰를 반환
+    public String showCalendar(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+        List<PerformanceDTO> performances = performanceService.getPerformancesByUser(user.getUserId());
+        model.addAttribute("performances", performances);
+        return "calendar";
     }
 
     @GetMapping("/search")

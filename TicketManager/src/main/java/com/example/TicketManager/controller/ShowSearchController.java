@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/search")
@@ -62,5 +61,4 @@ public class ShowSearchController {
                     .body("공연 추가 중 오류 발생: " + e.getMessage());
         }
     }
-
 }

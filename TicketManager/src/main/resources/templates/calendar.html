@@ -1,59 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공연 일정</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>공연 달력</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome (for icons) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- FullCalendar 스타일시트 추가 -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.css" rel="stylesheet" />
+
     <style>
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 1px;
-            border: 1px solid #ccc;
+        /* 기본 스타일 */
+        .calendar-container {
+            margin: 20px;
         }
-
-        .calendar div {
-            padding: 10px;
-            height: 100px;
-            border: 1px solid #ccc;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .calendar div.date {
-            font-weight: bold;
-        }
-
-        .performance {
-            background-color: #f8f9fa;
-            padding: 5px;
-            border-radius: 3px;
-            margin-top: 5px;
+        /* FullCalendar 스타일에 맞게 달력 크기 조정 */
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
-<div class="container mt-4">
-    <h2>공연 일정</h2>
-    <div class="calendar">
-        <!-- 달력 -->
-        <div th:each="day : ${calendar}">
-            <div class="date" th:text="${day.date}"></div>
-            <div th:each="performance : ${day.performances}">
-                <div class="performance">
-                    <div th:text="${performance.title}"></div>
-                    <div th:text="${performance.location}"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<a href="/search">공연 검색</a>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">공연 달력</h1>
 
-<!-- Optional: Include Bootstrap JS for better UI interaction -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 버튼 추가 -->
+    <div class="header-buttons mb-3 text-center">
+        <a href="/search" class="btn btn-primary">
+            <i class="fas fa-search"></i> 공연 검색
+        </a>
+    </div>
+
+    <!-- FullCalendar로 달력을 표시할 영역 -->
+    <div id="calendar" class="calendar-container"></div>
+
+</div>
+
+<!-- FullCalendar 스크립트 -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script> <!-- jQuery 2.x 사용 -->
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.js"></script>
+<script th:inline="javascript">
+    var performances = [[${performances}]];
+</script>
+<script src="/js/calendar.js"></script>
+
+
 </body>
 </html>

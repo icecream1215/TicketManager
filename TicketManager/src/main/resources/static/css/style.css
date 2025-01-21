@@ -1,0 +1,23 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa; /* 밝은 배경 */
+    color: #333; /* 텍스트 색상 */
+}
+
+h1, h2 {
+    font-weight: bold;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #e9ecef; /* 테이블 줄 색상 */
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
