@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/search")
@@ -29,21 +31,24 @@ public class ShowSearchController {
     }
 
     @PostMapping
-    public String searchShows(
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> searchShows(
             @RequestParam("showName") String showName,
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
+            @RequestParam(defaultValue = "1") int page,
             Model model) {
-        System.out.println("showName: " + showName);
-        System.out.println("startDate: " + startDate);
-        System.out.println("endDate: " + endDate);
 
+        int rows = 50;
         // 서비스에서 검색 결과 가져오기
-        List<Performance> performances = kopisService.getPerformances(showName, startDate, endDate);
+        List<Performance> performances = kopisService.getPerformances(showName, startDate, endDate, page, rows);
+        boolean hasNextPage = performances.size() >= rows;
 
-        // 검색 결과를 모델에 추가
-        model.addAttribute("performances", performances);
-        return "search";
+        Map<String, Object> result = new HashMap<>();
+        result.put("performances", performances);
+        result.put("hasNextPage", hasNextPage);
+
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/performances/add")

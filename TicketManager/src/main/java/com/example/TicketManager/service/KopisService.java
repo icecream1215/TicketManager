@@ -22,7 +22,7 @@ public class KopisService {
     @Value("${kopis.api.key}")
     private String apiKey;
 
-    public List<Performance> getPerformances(String showName, String startDate, String endDate) {
+    public List<Performance> getPerformances(String showName, String startDate, String endDate, int page, int rows) {
         // 날짜 형식 변환 (yyyy-MM-dd -> yyyyMMdd)
         if (startDate != null && startDate.length() == 10) {
             startDate = startDate.replace("-", "");  // 2025-01-12 -> 20250112
@@ -35,8 +35,8 @@ public class KopisService {
                 .queryParam("service", apiKey)
                 .queryParam("stdate", startDate)
                 .queryParam("eddate", endDate)
-                .queryParam("cpage", 1)
-                .queryParam("rows", 10)
+                .queryParam("cpage", page)
+                .queryParam("rows", rows)
                 .queryParam("shprfnm", showName)
                 .toUriString();
 

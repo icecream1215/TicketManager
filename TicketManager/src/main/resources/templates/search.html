@@ -19,7 +19,7 @@
     <h1 class="text-center mb-4">공연 검색</h1>
 
     <!-- 검색 폼 -->
-    <form action="/search" method="post" class="row g-3 mb-4">
+    <form id="searchForm" class="row g-3 mb-4">
         <div class="col-md-4">
             <label for="showName" class="form-label">공연 이름</label>
             <input type="text" id="showName" name="showName" class="form-control" placeholder="공연 이름 입력">
@@ -50,24 +50,14 @@
             <th>액션</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="performance : ${performances}">
-            <td th:text="${performance.name}"></td>
-            <td th:text="${performance.location}"></td>
-            <td th:text="|${performance.startDate} ~ ${performance.endDate}|"></td>
-            <td>
-                <button class="btn btn-success add-btn"
-                        th:data-id="${performance.id}"
-                        th:data-name="${performance.name}"
-                        th:data-location="${performance.location}"
-                        th:data-startdate="${performance.startDate}"
-                        th:data-enddate="${performance.endDate}">
-                    <i class="fas fa-plus"></i> 추가
-                </button>
-            </td>
-        </tr>
+        <tbody id="search-results">
         </tbody>
     </table>
+    <div class="d-flex justify-content-center mt-4">
+        <button id="prevPage" class="btn btn-secondary me-2" disabled>이전</button>
+        <span id="pageIndicator">페이지 1</span>
+        <button id="nextPage" class="btn btn-secondary ms-2">이후</button>
+    </div>
 </div>
 
 <script src="/js/search.js"></script>
