@@ -2,6 +2,9 @@ package com.example.TicketManager.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +16,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -35,13 +40,16 @@ public class User implements UserDetails {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_performance",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "performance_id")
-    )
-    private List<Performance> performances = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserPerformance> userPerformances = new ArrayList<>();
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_performance",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "performance_id")
+//    )
+    //private List<Performance> performances = new ArrayList<>();
 
     // UserDetails 구현
     @Override

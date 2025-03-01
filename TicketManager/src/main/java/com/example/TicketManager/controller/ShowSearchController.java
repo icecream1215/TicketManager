@@ -1,5 +1,6 @@
 package com.example.TicketManager.controller;
 
+import com.example.TicketManager.dto.PerformanceDTO;
 import com.example.TicketManager.model.Performance;
 import com.example.TicketManager.service.CustomUserDetails;
 import com.example.TicketManager.service.KopisService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,13 +55,23 @@ public class ShowSearchController {
 
     @PostMapping("/performances/add")
     @ResponseBody
-    public ResponseEntity<String> addPerformanceToUser(@RequestBody Performance performance) {
+    public ResponseEntity<String> addPerformanceToUser(@RequestBody PerformanceDTO performanceDTO) {
         try {
+            LocalDate selectedDate = performanceDTO.getSelectedDate();
+            LocalDate startDate = LocalDate.parse(performanceDTO.getStartDate().replace(".", "-"));
+            LocalDate endDate = LocalDate.parse(performanceDTO.getEndDate().replace(".", "-"));
+
+            // 날짜 검증
+            if (selectedDate.isBefore(startDate) || selectedDate.isAfter(endDate)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("선택한 날짜가 공연 일정 범위를 벗어났습니다.");
+            }
+
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
             Long userId = userDetails.getUserId();
 
-            performanceService.addPerformanceToUser(userId, performance);
+            performanceService.addPerformanceToUser(userId, performanceDTO);
             return ResponseEntity.ok("공연이 성공적으로 추가되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

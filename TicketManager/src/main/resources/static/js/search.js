@@ -55,12 +55,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateResults(performances) {
         const resultsContainer = document.getElementById("search-results");
-        if (resultsContainer) {
+        if(!resultsContainer){
+            return;
+        }
             resultsContainer.innerHTML = performances.map(performance => `
                 <tr>
                     <td>${performance.name}</td>
                     <td>${performance.location}</td>
-                    <td>${performance.startDate} ~ ${performance.endDate}</td>
+                    <td><input type="date" class="selected-date"
+                                                   min="${performance.startDate}"
+                                                   max="${performance.endDate}"
+                                                   required>
+                    </td>
                     <td>
                         <button class="btn btn-success add-btn"
                                 data-id="${performance.id}"
@@ -73,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     </td>
                 </tr>
             `).join("");
-        }
         document.getElementById("pageIndicator").textContent = `페이지 ${currentPage}`;
     }
 
@@ -88,13 +93,22 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", (event) => {
         if (event.target.classList.contains("add-btn")) {
             const button = event.target;
+            const row = button.closest("tr");
+            const selectedDateInput = row.querySelector(".selected-date");
+
+            if (!selectedDateInput.value) {
+                alert("날짜를 선택하세요.");
+                return;
+            }
+
             const performance = {
                 id: button.dataset.id,
                 name: button.dataset.name,
                 location: button.dataset.location,
                 startDate: button.dataset.startdate,
                 endDate: button.dataset.enddate,
-            };
+                selectedDate: selectedDateInput.value
+           };
 
             fetch("/search/performances/add", {
                 method: "POST",
