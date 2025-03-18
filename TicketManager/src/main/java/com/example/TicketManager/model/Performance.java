@@ -37,13 +37,6 @@ public class Performance {
     @Column(name = "location")
     private String location;    // 공연 장소
 
-//    @JacksonXmlProperty(localName = "genrenm")
-//    @Column(name = "genre")
-//    private String genre;       // 장르
-//    @JacksonXmlProperty(localName = "poster")
-//    @Column(name = "poster")
-//    private String poster;      // 포스터 이미지 URL
-
     @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserPerformance> userPerformances = new ArrayList<>();
 

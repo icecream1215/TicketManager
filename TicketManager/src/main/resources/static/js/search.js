@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <tr>
                     <td>${performance.name}</td>
                     <td>${performance.location}</td>
+                    <td>${performance.startDate}~${performance.endDate}</td>
                     <td><input type="date" class="selected-date"
                                                    min="${performance.startDate}"
                                                    max="${performance.endDate}"

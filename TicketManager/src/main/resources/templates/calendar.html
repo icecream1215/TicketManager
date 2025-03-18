@@ -14,24 +14,15 @@
     <!-- FullCalendar v5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
 
-    <style>
-        /* 기본 스타일 */
-        .calendar-container {
-            margin: 20px;
-        }
-        /* FullCalendar 스타일에 맞게 달력 크기 조정 */
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="container mt-5">
     <h1 class="text-center mb-4">내 공연 달력</h1>
 
     <!-- 버튼 추가 -->
-    <div class="header-buttons mb-3 text-center">
+    <div class="mb-3 text-end">
         <a href="/search" class="btn btn-primary">
             <i class="fas fa-search"></i> 공연 검색
         </a>
@@ -40,6 +31,19 @@
     <!-- FullCalendar로 달력을 표시할 영역 -->
     <div id="calendar" class="calendar-container"></div>
 
+</div>
+<!-- 이벤트 상세 정보 모달 -->
+<div id="eventModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <p><strong>날짜:</strong> <span id="modalDate"></span></p>
+        <p><strong>장소:</strong> <span id="modalLocation"></span></p>
+        <p><strong>공연 기간:</strong> <span id="modalPeriod"></span></p>
+        <button id="deleteSelectedDateBtn" class="btn btn-danger" onclick="deleteSelectedDate()" style="display: none;">
+            선택한 날짜 삭제
+        </button>
+    </div>
 </div>
 
 <!-- FullCalendar 스크립트 -->

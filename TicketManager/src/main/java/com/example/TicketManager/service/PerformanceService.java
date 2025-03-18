@@ -91,6 +91,15 @@ public class PerformanceService {
                 .collect(Collectors.toList());
     }
 
+    // 선택한 날짜의 공연 삭제
+    public void deletePerformanceByIdAndSelectedDate(Long userId, String performanceId, LocalDate selectedDate) {
+        if (!userPerformanceRepository.existsByUserIdAndPerformanceIdAndSelectedDate(userId, performanceId, selectedDate)) {
+            throw new IllegalArgumentException("해당 날짜의 공연이 존재하지 않습니다.");
+        }
+
+        userPerformanceRepository.deleteByUserIdAndPerformanceIdAndSelectedDate(userId, performanceId, selectedDate);
+    }
+
     private String formatDate(String dateString) {
         try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy.MM.dd");  // 기존 형식
